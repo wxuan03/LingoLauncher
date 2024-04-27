@@ -2,18 +2,119 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="device-width, initial-scale=1.0">
     <title>Lingo Launcher</title>
+    <style> 
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+        }
+
+        h6, h1, h3, select, button, textarea {
+            margin: 5px 0; 
+            padding: 5px; 
+            text-align:center;
+        }
+
+        h6, select {
+            font-size: 20px;
+            line-height: 20px; 
+            
+        }
+
+        h1, h3 {
+            font-size: 30px;
+            line-height: 30px; 
+        }
+        
+        select{
+            line-height:.1;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .opaque-button{
+            opacity:.1;
+            
+            
+        }
+
+        textarea{
+            font-family: 'Roboto', sans-serif;
+            width: 200px;
+            height: 150px;
+            resize: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #023d6d;
+            font-family: 'Roboto', sans-serif;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: opacity 0.3s ease; 
+        }
+        button:active{
+            background-color:rgb(0, 174, 255);
+        }
+    </style>
 </head>
 
-<body>
-    <h1>Lingo Launcher</h1>
+<body style="background-color: rgb(0, 0, 0); width:380px; height:480px">
+    <h1 style="color: #ffffff;">Lingo Launcher</h1>
+    <h3 style="color: #ffffff;">Preferences</h3>
+    <h6 style="color: #ffffff;">Language Selection:</h6>
     <select>
-        <option value="option1">Option 1</option>
-        <option value="option2">Option 2</option>
-        <option value="option3">Option 3</option>
-        <option value="option4">Option 4</option>
+        <option value=0>Select</option>
+        <option value=1>Kurdish</option>
+        <option value=2>English</option>
+        <option value=3>Hindi</option>
+        <option value=4>Mandarin</option>
       </select>
-    <button>Click me</button>
+      <br>
+    <button value = 0 id="Page_Tranlation">Whole Page Translation</button>
+    <button value = 1  id="Page_Reversion" class="opaque-button">Revert Page Translation</button>
+    <button  value = 2 id="Selective_Translation">Selective Translation</button>
+    <textarea id="Output" style="overflow-y: scroll;">Output</textarea>    
+    
+    <script> 
+
+        buttons=document.querySelectorAll('button');
+        selects=document.querySelector('select')
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener('click', function(){
+                if(selects.value==0){
+                    return;
+                }
+                if(buttons[i].innerText!="Selective Translation"){
+                    buttons.forEach(btn=>{
+                            btn.classList.remove('opaque-button');
+                            btn.disabled=false;
+                    });
+                }
+                
+                if(buttons[i].innerText!="Selective Translation"){
+                    this.classList.add('opaque-button');
+                    buttons[i].disabled=true;
+                }
+                if(buttons[i].innerText=="Selective Translation"){
+                    document.getElementById("Output").textContent=highlightedText;
+                }
+                if(buttons[i].innerText=="Page_Tranlation"){
+                    wholePageTextReplacement();
+                }
+                if(buttons[i].innerText=="Page_Reversion"){
+                    wholePageReversion();
+                }
+            });
+        }
+    </script>
 </body>
 </html>

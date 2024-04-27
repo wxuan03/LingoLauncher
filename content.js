@@ -1,20 +1,28 @@
-const text = document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,td,caption,span,a')
-for (let i = 0; i < text.length; i++) {
-    let toBeTranslated = text[i].innerHTML;
-    (function(index) {
-        google.translate.translate(toBeTranslated, 'de', function(translation) {
-            text[index].innerHTML = translation.translationText;
-        });
-    })(i);
+
+const originalText = document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,td,caption,span,a');
+highlightedText="";
+
+function wholePageTextReplacement(){
+    temp = document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,td,caption,span,a')
+    for (let i = 0; i < temp.length; i++) {
+        temp[i].innerText="Talin is cute";
+    }
+}
+
+
+function wholePageReversion(){
+    temp=document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,td,caption,span,a')
+    for (let i = 0; i < temp.length; i++) {
+        temp[i].innerText=originalText[i].innerText;
+    }
+}
+
+
+function selectFunctionality(){
+    document.addEventListener("mouseup", function(){ 
+        highlightedText=window.getSelection().toString();
+    });
 }
 
 
 
-function google_translate_api(){
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-    document.body.appendChild(script);
-}
-
-google_translate_api()
