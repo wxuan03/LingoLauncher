@@ -2,24 +2,23 @@
     "manifest_version": 3,
     "name": "Lingo Launcher",
     "version": "1.0",
-    "description": "Translate web pages with ease.",
-    "permissions": ["activeTab"],
+    "description": "Translate web pages",
+    "permissions": ["scripting", "activeTab","bookmarks", "contextMenus"],
+    "host_permissions": ["https://*"],
     "action": {
-      "default_popup": "popup.html",
-    },
-    "icons": {
-      "16": "icon16.png",
-      "48": "icon48.png",
-      "128": "icon128.png"
+      "default_popup": "popup.html"
     },
     "background": {
-      "service_worker": "background.js"
+      "service_worker": "backgroundscript.js"
     },
     "content_scripts": [
       {
-        "matches": ["
-  chrome-extension://your-extension-id/popup.html"],
-  "js": ["content.js"]
-  }
-  ]
-  }
+        "matches": ["<all_urls>"],
+        "js": ["content.js"],
+        "all_frames": true
+      }
+    ]
+    
+}
+  
+  

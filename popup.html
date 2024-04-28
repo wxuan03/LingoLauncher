@@ -83,38 +83,6 @@
     <button value = 1  id="Page_Reversion" class="opaque-button">Revert Page Translation</button>
     <button  value = 2 id="Selective_Translation">Selective Translation</button>
     <textarea id="Output" style="overflow-y: scroll;">Output</textarea>    
-    
-    <script> 
-
-        buttons=document.querySelectorAll('button');
-        selects=document.querySelector('select')
-        for (let i = 0; i < buttons.length; i++) {
-            buttons[i].addEventListener('click', function(){
-                if(selects.value==0){
-                    return;
-                }
-                if(buttons[i].innerText!="Selective Translation"){
-                    buttons.forEach(btn=>{
-                            btn.classList.remove('opaque-button');
-                            btn.disabled=false;
-                    });
-                }
-                
-                if(buttons[i].innerText!="Selective Translation"){
-                    this.classList.add('opaque-button');
-                    buttons[i].disabled=true;
-                }
-                if(buttons[i].innerText=="Selective Translation"){
-                    document.getElementById("Output").textContent=highlightedText;
-                }
-                if(buttons[i].innerText=="Page_Tranlation"){
-                    wholePageTextReplacement();
-                }
-                if(buttons[i].innerText=="Page_Reversion"){
-                    wholePageReversion();
-                }
-            });
-        }
-    </script>
+    <script src="popup.js"></script>
 </body>
 </html>
