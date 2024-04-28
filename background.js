@@ -1,5 +1,5 @@
 async function fetchTranslation(text, targetLanguage) {
-    const apiKey = ''; 
+    const apiKey = 'AIzaSyBlGgw4Uott8Qf0vPRUAZXhnZ-XvjAPvCA'; 
     const url = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`;
     const response = await fetch(url, {
         method: 'POST',
