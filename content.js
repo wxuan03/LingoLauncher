@@ -2,7 +2,7 @@ toTranslate="";
   function wholePageTextReplacement(){
     temp = document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,td,caption,span,a');
     for (let i = 0; i < temp.length; i++) {
-      temp[i].innerText="Talin is pookie"; //translate each one
+      temp[i].innerText=""; //translate each one
     }
   }
 
