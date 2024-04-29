@@ -4,12 +4,12 @@
     "version": "1.0",
     "description": "Translate web pages",
     "permissions": ["scripting", "activeTab","bookmarks", "contextMenus"],
-    "host_permissions": ["https://*/*"],
+    "host_permissions": ["https://*"],
     "action": {
       "default_popup": "popup.html"
     },
     "background": {
-      "service_worker": "background.js"
+      "service_worker": "backgroundscript.js"
     },
     "content_scripts": [
       {
