@@ -30,14 +30,19 @@ function wholePageTextReplacement(){
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log(request);
   if (request.message[0] == "Whole Page Translation") {
-    wholePageTextReplacement();
+      wholePageTextReplacement();
   } else if (request.message[0] == "Selective Translation") {
-    console.log("This is: " + toTranslate);
-    sendResponse({ success: true, message: selectFunctionality()});
+      console.log("Selected text: " + toTranslate);
+      apiRequest(toTranslate, request.message[1]).then(translatedText => {
+          sendResponse({ success: true, message: translatedText});
+      }).catch(error => {
+          console.error("Translation error: ", error);
+          sendResponse({ success: false, message: "Translation failed."});
+      });
+      return true; // Indicates that the response is asynchronous.
   } else if (request.message[0] == "Revert Page Translation") {
-    wholePageReversion();
+      wholePageReversion();
   }
-  return true;
 });
 
 
@@ -47,7 +52,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     const headers = {
         "content-type": "application/json",
-        "x-rapidapi-key": "8cc341acf1msh1184fa064c106adp1fcfa6jsn80dfc619be1b",
+        "x-rapidapi-key": "68a912a86dmsh28ce246dc9ccbddp14fa55jsnc94f0e7ccb4d",
         "x-rapidapi-host": "microsoft-translator-text.p.rapidapi.com"
     };
 
