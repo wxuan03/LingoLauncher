@@ -11,9 +11,6 @@
     "icons":{
       "128":"icon.png"
     },
-    "background": {
-      "service_worker": "backgroundscript.js"
-    },
     "content_scripts": [
       {
         "matches": ["<all_urls>"],
