@@ -1,12 +1,11 @@
 
-translated="";
 toTranslate="";
 
 
 function wholePageTextReplacement(){
     temp = document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,td,caption,span,a');
     for (let i = 0; i < temp.length; i++) {
-      //temp[i].innerText=apiRequest(temp[i].innerText, "fr");
+      temp[i].innerText="Talin";
     }
   }
 
@@ -24,25 +23,17 @@ function wholePageTextReplacement(){
     location.reload();
   }
   
-  async function selectFunctionality(lang) {
-    try {
-        const translatedText = await apiRequest(toTranslate, lang);
-        console.log(translatedText);
-        return translatedText;
-    } catch (error) {
-        console.error('Translation error:', error);
-        return ''; 
-    }
+  function selectFunctionality() {
+    return toTranslate;
 }
   
-chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log(request);
   if (request.message[0] == "Whole Page Translation") {
     wholePageTextReplacement();
   } else if (request.message[0] == "Selective Translation") {
-    const translatedText = await selectFunctionality(request.message[1]);
-    console.log("This is: " + translatedText);
-    sendResponse({ success: true, message: hello});
+    console.log("This is: " + toTranslate);
+    sendResponse({ success: true, message: selectFunctionality()});
   } else if (request.message[0] == "Revert Page Translation") {
     wholePageReversion();
   }
@@ -75,8 +66,8 @@ chrome.runtime.onMessage.addListener(async function (request, sender, sendRespon
 
         const responseData = await response.json();
         const translatedText = responseData[0].translations[0].text;
-        console.log("Translated text:", translatedText); // Log the translated text
-        return translatedText; // Return the translated text
+        console.log("Translated text:", translatedText); 
+        return translatedText; 
     } catch (error) {
         console.error("Error:", error);
         throw error;

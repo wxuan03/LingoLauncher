@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         if(buttons[i].id=="TTS"){
           var message = new SpeechSynthesisUtterance(TTS);
-          message.lang=selectedLanguage;
+          message.lang=languageSelect.value;
           window.speechSynthesis.speak(message);
           return;
         }
@@ -42,12 +42,13 @@ document.addEventListener('DOMContentLoaded', function(){
 
         
         // Send message to the content script
-         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+         chrome.tabs.query({ active: true, currentWindow: true },  function (tabs) {
           chrome.tabs.sendMessage(tabs[0].id, { message: [buttons[i].innerHTML,languageSelect.value] }, function (response) {
               if (response) {
                   console.log(response.message);
                   textarea.innerText=response.message;
                   TTS=response.message;
+                  console.log("This is tts: " + TTS);
               } else {
                   console.log("No response received.");
               }
