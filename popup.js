@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function(){
     var buttons = document.querySelectorAll('button');
     var selects = document.querySelector('select');
     var textarea = document.querySelector('textarea');
+    var languageSelect = document.getElementById("languageSelect");
     var TTS="";
     // Add click event listener to each button
     for (let i = 0; i < buttons.length; i++) {
@@ -28,8 +29,6 @@ document.addEventListener('DOMContentLoaded', function(){
           });
         }
         if(buttons[i].id=="TTS"){
-          var languageSelect = document.getElementById("languageSelect");
-          var selectedLanguage = languageSelect.value;
           var message = new SpeechSynthesisUtterance(TTS);
           message.lang=selectedLanguage;
           window.speechSynthesis.speak(message);
@@ -43,9 +42,10 @@ document.addEventListener('DOMContentLoaded', function(){
 
         
         // Send message to the content script
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-          chrome.tabs.sendMessage(tabs[0].id, { message: buttons[i].innerHTML }, function (response) {
+         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+          chrome.tabs.sendMessage(tabs[0].id, { message: [buttons[i].innerHTML,languageSelect.value] }, function (response) {
               if (response) {
+                  console.log(response.message);
                   textarea.innerText=response.message;
                   TTS=response.message;
               } else {
