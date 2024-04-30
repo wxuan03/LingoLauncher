@@ -16,10 +16,12 @@ document.addEventListener('DOMContentLoaded', function(){
                           btn.disabled = false;
                       });
                   }
-                  if (buttons[i].innerText != "Selective Translation") {
-                      this.classList.add('opaque-button');
-                      buttons[i].disabled = true;
-                  }
+                  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                    chrome.tabs.sendMessage(tabs[0].id, { message: [buttons[i].innerText, languageSelect.value] });
+                  });
+                  this.classList.add('opaque-button');
+                  buttons[i].disabled = true;
+
               }
               return;
           }
@@ -36,11 +38,17 @@ document.addEventListener('DOMContentLoaded', function(){
               return;
           }
 
-          if (buttons[i].innerText == "Whole Page Translation") {
+          if (buttons[i].innerText == "Revert Page Translation") {
               chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
                   chrome.tabs.sendMessage(tabs[0].id, { message: [buttons[i].innerText, languageSelect.value] });
               });
-          } else if (buttons[i].innerText == "Selective Translation") {
+          } 
+          if (buttons[i].innerText == "Whole Page Translation") {
+            chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, { message: [buttons[i].innerText, languageSelect.value] });
+            });
+        } 
+          if (buttons[i].innerText == "Selective Translation") {
               chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
                   chrome.tabs.sendMessage(tabs[0].id, { message: [buttons[i].innerText, languageSelect.value] }, function (response) {
                       if (response && response.success) {
@@ -52,7 +60,8 @@ document.addEventListener('DOMContentLoaded', function(){
                       }
                   });
               });
-          } else {
+          } 
+          if (buttons[i].innerText != "Selective Translation") {
               this.classList.add('opaque-button');
               buttons[i].disabled = true;
           }
