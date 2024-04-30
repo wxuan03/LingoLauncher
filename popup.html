@@ -67,6 +67,8 @@
         button:active{
             background-color:rgb(0, 174, 255);
         }
+        /* The switch - the box around the slider */
+
     </style>
 </head>
 
@@ -86,9 +88,10 @@
         <option value="ja">Japanese</option>
         <option value="ru">Russian</option>
     </select>
-      <br>
-    <button value = 0 id="Page_Tranlation">Whole Page Translation</button>
-    <button value = 1  id="Page_Reversion">Revert Page Translation</button>
+    <label style = "color: #ffffff;" class="switch">
+        Paragraph Translation
+        <input type="checkbox" id = "checkbox">
+    </label>
     <button  value = 2 id="Selective_Translation">Selective Translation</button>
     <textarea id="Output" style="overflow-y: scroll;"></textarea>    
     <button  value = 3 id="TTS" class="fa fa-volume-up"></button>
