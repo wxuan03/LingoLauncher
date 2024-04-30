@@ -3,11 +3,31 @@ toTranslate="";
 
 
 function wholePageTextReplacement(){
-    temp = document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,td,caption,span,a');
-    for (let i = 0; i < temp.length; i++) {
-      temp[i].innerText="Talin";
-    }
+  let allText = document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,td,caption,span,a');
+  let textToTranslate = "";
+  for (let i = 0; i < allText.length; i++) {
+      textToTranslate += allText[i].innerText + " ";
+      if (textToTranslate.length > 2500) {  // API limit
+          textToTranslate = textToTranslate.slice(0, 2500);
+          break;  // Stop adding text once the limit is reached
+      }
   }
+  
+  apiRequest(textToTranslate, languageToTranslateTo) // Assuming you have a way to set this from the popup
+      .then(translatedText => {
+          let index = 0;
+          allText.forEach(element => {
+              let textLength = element.innerText.length;
+              if (index + textLength <= translatedText.length) {
+                  element.innerText = translatedText.slice(index, index + textLength);
+                  index += textLength;
+              }
+          });
+      })
+      .catch(error => {
+          console.error("Translation error: ", error);
+      });
+}
 
 
     const set = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, li, td, caption, span, a');
@@ -30,6 +50,7 @@ function wholePageTextReplacement(){
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log(request);
   if (request.message[0] == "Whole Page Translation") {
+      languageToTranslateTo = request.message[1];
       wholePageTextReplacement();
   } else if (request.message[0] == "Selective Translation") {
       console.log("Selected text: " + toTranslate);

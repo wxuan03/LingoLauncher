@@ -36,10 +36,13 @@ document.addEventListener('DOMContentLoaded', function(){
               return;
           }
 
-          // Adjusted handling for Selective Translation
-          if (buttons[i].innerText == "Selective Translation") {
+          if (buttons[i].innerText == "Whole Page Translation") {
               chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                  chrome.tabs.sendMessage(tabs[0].id, { message: [buttons[i].innerHTML, languageSelect.value] }, function (response) {
+                  chrome.tabs.sendMessage(tabs[0].id, { message: [buttons[i].innerText, languageSelect.value] });
+              });
+          } else if (buttons[i].innerText == "Selective Translation") {
+              chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                  chrome.tabs.sendMessage(tabs[0].id, { message: [buttons[i].innerText, languageSelect.value] }, function (response) {
                       if (response && response.success) {
                           console.log("Translation received: " + response.message);
                           textarea.innerText = response.message;
